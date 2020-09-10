@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membre Dashboard{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1>
+		hello {{ userConnecte.prenom }} {{ userConnecte.nom }} 
+	</h1>
+	<hr>
+	ton compte a été créé le {{ userConnecte.createdAt|date('d - m - Y') }}
+	<hr>
+	{% if userConnecte.cp == 42300 %}
+		être Roannais c'est de la balle
+	{% else %}
+		t'as la loose
+	{% endif %}
+</div>
+{% endblock %}

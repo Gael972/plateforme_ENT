@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LiaisonCm{% endblock %}
+
+{% block body %}
+    <h1>LiaisonCm</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liaison_cm.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('liaison_cm_index') }}">back to list</a>
+
+    <a href="{{ path('liaison_cm_edit', {'id': liaison_cm.id}) }}">edit</a>
+
+    {{ include('liaison_cm/_delete_form.html.twig') }}
+{% endblock %}

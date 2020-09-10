@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Types de devoir{% endblock %}
+
+{% block body %}
+    <h1>Type de devoir : <strong>"{{ note_type_devoir.nom }}"</strong></h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ note_type_devoir.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ note_type_devoir.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('note_type_devoir_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('note_type_devoir_edit', {'id': note_type_devoir.id}) }}">Modifier</a>
+
+    {{ include('note_type_devoir/_delete_form.html.twig') }}
+{% endblock %}

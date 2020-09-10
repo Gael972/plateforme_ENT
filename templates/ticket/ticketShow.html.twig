@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}nouveau ticket{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1><strong>Ticket ouvert Test</strong></h1>
+	<small>{{ ticket.createdAt|date('d-m-Y h:i:s') }} </small>
+	<!--Début de l'entête -->
+	<div class="row">
+		<div class="col-lg-8">
+			<h2>{{ ticket.titre }}</h2> 
+		</div>
+		<div class="col-lg-4">
+			<div class="card mb-4 border-bottom-primary align-text-bottom">
+                <div class="card-body align-text-bottom">
+                     <button type="button" class="btn btn-outline-success">
+                        <a href="/ticketReponse/{{ticket.id}}" title="répondre">
+						<i class="far fa-arrow-alt-circle-right"></i></a>
+                     </button>
+					 <button type="button" class="btn btn-outline-success">
+                        <a href= "/ticketDelete/{{ ticket.id }}" title="supprimer"><i class="fas fa-trash-alt"></i></a>
+                     </button>
+                </div>
+              </div>
+		</div>
+	</div>
+	<!--Fin de l'entête -->
+	<div class="card mb-4 py-3 border-left-primary">
+        <div class="card-body">
+            {{ ticket.contenu|raw }}
+        </div>
+    </div>
+	<br>
+		
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}evoirs{% endblock %}
+
+{% block body %}
+    <h1>Liste de devoirs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Nom</th>
+                <th>Coefficient</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_devoir in note_devoirs %}
+            <tr>
+                <td>{{ note_devoir.id }}</td>
+                <td>{{ note_devoir.date ? note_devoir.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ note_devoir.nom }}</td>
+                <td>{{ note_devoir.coefficient }}</td>
+                <td>
+                    <a href="{{ path('note_devoir_show', {'id': note_devoir.id}) }}">Afficher</a>
+                    <a href="{{ path('note_devoir_edit', {'id': note_devoir.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun devoir</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('note_devoir_new') }}">Saisir un nouveau devoir</a>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}nouveau ticket{% endblock %}
+
+{% block body %}
+{% if (reponse == false) %}
+<h1>Démarrer une conversation</h1>
+{% else %}
+<h1>Répondre</h1>
+{% endif %}
+<form class="user" action="/ticketAjout" method="post">
+   <div class="form-group row">
+    {% if (reponse == false) %}
+		<div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="text" name ="titre" class="form-control form-control-user" id="titre" placeholder="Titre">
+        </div>
+    {% else %}
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="text" name ="titre" class="form-control form-control-user" id="titre" value="RE: {{ ticketDepart.titre }}">
+        </div>
+    {% endif %}
+        {% if (reponse == false) %}
+		<div class="col-sm-6 mb-3 mb-sm-0">
+            <select name ="destinataire" class="form-control" id="destinataire">
+				{% for item in users %} 
+				<!--  la variable users contient tous les utilisateurs. Elle est envoyée par le controller ticketController-->
+					<option class="form-control form-control-user" value="{{ item.id }}"> {{ item.nom }}  </option>
+				{% endfor %}
+			</select>
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-8 mb-6 mb-sm-0">
+            <textarea cols= "50" rows="50" name="content" id="editor" class="form-control form-control-user"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3 mb-2 mb-sm-0">
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Envoyer
+            </button>
+        </div>
+    </div>
+ </form>
+
+<!-- debut script -->
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<!-- fin script -->
+
+{% endblock %}

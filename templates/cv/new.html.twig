@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cv{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <h1>Create new Cv</h1>
+
+    {{ include('cv/_form.html.twig') }}
+
+    <a href="{{ path('cv_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos Tickets{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Listes des Tickets</h1>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-dest" role="tab" aria-controls="nav-home" aria-selected="true">Boîte de réception</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-exp" role="tab" aria-controls="nav-profile" aria-selected="false">Boîte d'envois</a>
+			   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-suppr" role="tab" aria-controls="nav-profile" aria-selected="false">Messages supprimés</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+
+            <div class="tab-pane fade show active" id="nav-dest" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Titre</th>
+                            <th>Expediteur</th>
+                            <th>Destinataire</th>
+                            <th>Message</th>   
+                            <th>Lu</th>   
+                            <th>Actions</th>   
+                        </tr>
+                    <thead>
+                    <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.createdAt | date('d / m / Y') }}</td>
+                            <td>{{ ticket.titre }}</td>
+                            <td>{{ ticket.membreExp.nom }} {{ ticket.membreExp.prenom }}</td>
+                            <td>{{ ticket.membreDest.nom }} {{ ticket.membreDest.prenom }}</td>
+                            <td>{{ ticket.contenu | raw }}</td>
+                        {% if ( ticket.lecture != null) %}
+                            <td>{{ ticket.lecture| date('d/m/Y h:i:s')  }}</td>
+                        {% else %}
+                            <td>message non lu</td>
+                        {% endif %}
+                            <td>
+                                <div class="btn-group" role="group" aria-label="action">
+                                    <button type="button" class="btn btn-outline-primary"   id= "open" >
+                                       ouvrir
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success">
+                                        <a href="/ticketReponse/{{ticket.id}}">Répondre</a>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" >
+                                        <a href= {{ path('ticket_delete',{'id': ticket.id})  }} title="supprimer"><i class="fas fa-trash-alt"></i></a>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td colspan="7"><div class="contenu" id="zone" display="none"> {{ ticket.contenu|raw }}</div></td></tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="nav-exp" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Titre</th>
+                            <th>Expediteur</th>
+                            <th>Destinataire</th>
+                            <th>Message</th>   
+                            <th>Lu</th>
+                            <th>Actions</th>      
+                        </tr>
+                    <thead>
+                    <tbody>
+                    {% for ticket in ticketsExp %}
+                        <tr>
+                            <td>{{ ticket.createdAt | date('d / m / Y') }}</td>
+                            <td>{{ ticket.titre }}</td>
+                            <td>{{ ticket.membreExp.nom }} {{ ticket.membreExp.prenom }}</td>
+                            <td>{{ ticket.membreDest.nom }} {{ ticket.membreDest.prenom }}</td>
+                            <td>{{ ticket.contenu | raw }}</td>
+                        {% if ( ticket.lecture != null) %}
+                            <td>{{ ticket.lecture|date('d/m/Y h:i:s') }}</td>
+                        {% else %}
+                            <td>message non lu</td>
+                        {% endif %}
+                            <td>
+                                <div class="btn-group" role="group" aria-label="action">
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <a href={{ path('ticket_show',{'id': ticket.id}) }}>Ouvrir</a>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+			<!--Fin du tableau des messages supprimés -->
+			<!--Début du tableau de message supprimé -->
+			<div class="tab-pane fade show" id="nav-suppr" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Titre</th>
+                            <th>Expediteur</th>
+                            <th>Destinataire</th>
+                            <th>Message</th>   
+                            <th>Lu</th>   
+                        </tr>
+                    <thead>
+                    <tbody>
+                    {% for ticket in ticketsSuppr %}
+                        <tr>
+                            <td>{{ ticket.createdAt | date('d / m / Y') }}</td>
+                            <td>{{ ticket.titre }}</td>
+                            <td>{{ ticket.membreExp.nom }} {{ ticket.membreExp.prenom }}</td>
+                            <td>{{ ticket.membreDest.nom }} {{ ticket.membreDest.prenom }}</td>
+                            <td>{{ ticket.contenu | raw }}</td>
+                        {% if ( ticket.lecture != null) %}
+                            <td>{{ ticket.lecture| date('d/m/Y h:i:s')  }}</td>
+                        {% else %}
+                            <td>message non lu</td>
+                        {% endif %}
+                        </tr>
+                     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+<script>
+$(document).ready(function(){
+		$("#zone").hide();        
+    });
+	
+$(document).click(function(){
+		$("#zone").toggle();
+    });
+</script>
+
+
+
+
+{% endblock %}

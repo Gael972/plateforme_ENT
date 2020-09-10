@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LiaisonCm index{% endblock %}
+
+{% block body %}
+    <h1>LiaisonCm index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for liaison_cm in liaison_cms %}
+            <tr>
+                <td>{{ liaison_cm.id }}</td>
+                <td>
+                    <a href="{{ path('liaison_cm_show', {'id': liaison_cm.id}) }}">show</a>
+                    <a href="{{ path('liaison_cm_edit', {'id': liaison_cm.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('liaison_cm_new') }}">Create new</a>
+{% endblock %}

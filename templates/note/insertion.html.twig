@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saisie des notes{% endblock %}
+{% block stylesheet %}
+
+{% endblock %}
+{% block body %}
+    <br>
+	<h1>Saisie des notes</h1>
+	<h4>Veuillez choisir le devoir sur lequel vous souhaitez saisir et enregistrer des notes.</h4>
+	<br>
+    <label for="choix">Devoir :</label>
+    	<div class="col-sm-6 mb-3 mb-sm-0">
+            <select name ="choix" class="form-control" id="choix" onChange="choixUtilisateur()">
+				<option class="form-control form-control-user" value="0"> </option>
+				{% for item in listeDevoirs %}  
+					<option class="form-control form-control-user" value="{{ item.id }}"> {{ item.nom }} --- {{ item.matiere.nomMatiere }} du {{ item.date | date("d/m/y") }} </option>
+				{% endfor %}
+			</select>
+        </div><br>
+       <br>
+	   <hr>
+	   <form class="user" action=/ajoutnote method="post">
+	   <p id="tableauUtilisateur"> </p>
+	   <hr>
+		<br>
+        	<div class="form-group row">
+            	<div class="col-sm-3 mb-2 mb-sm-0">
+                	<button type="submit" class="btn btn-outline-primary btn-user btn-block">
+                    	Clôturer le devoir
+                	</button>
+				</div>
+			</div>
+		</form>
+</div>
+<script>
+function choixUtilisateur() 
+{
+
+	var indexChoix = $("#choix").val();
+	console.log(indexChoix);
+	$("#tableauUtilisateur").html("");
+	html_text="";
+	$.ajax ( 
+		{
+			url:"getUtilisateursByIndexChoix",
+			data:{
+				idChoix : indexChoix
+				},
+			dataType :'json',
+			method:'POST',
+			success : function(eleves)
+			{
+			
+			eleves = JSON.parse(eleves);
+			console.log(eleves);
+			html_text = "<table class=\"table table-bordered\"><thead class=\"thead-dark\"><tr><th>Nom</th><th>Prénom</th><th>Note</th><th>Etat</th></tr></thead><tbody>";
+			for(item in eleves)
+				{
+					html_text +="<tr>";
+
+					html_text +="<td>"+eleves[item]["nom"]+"</td>";
+					html_text +="<td>"+eleves[item]["prenom"]+"</td>";
+					html_text +="<td><input placeholder='"+eleves[item]["noteDevoir"]+"' id='"+eleves[item]['devoir']+"_"+eleves[item]['id']+"' type='number' name='"+eleves[item]['id']+"_"+eleves[item]['classe']+"_"+eleves[item]['devoir']+"' onblur='afficherMessage("+eleves[item]['devoir']+" , "+eleves[item]['id']+");'/></td>";
+					html_text +="<td><small id=message"+eleves[item]['id']+" class='form-text text-muted' ></small></td>";
+					html_text +="</tr>";
+				}
+			html_text += "</body></table>";
+
+			console.log("bien joué");
+
+			$("#tableauUtilisateur").html(html_text);
+			
+			}
+		});
+}
+
+function afficherMessage(idDevoir, idEleve) {
+	
+	var id_note = idDevoir+'_'+idEleve ;
+	var note = document.getElementById(id_note).value;
+	if(note > -2 && note < 21){
+	$("#message"+idEleve).html("<font color='green'> Votre note a bien été saisie</font>");
+
+
+
+	$.ajax ( 
+		{
+			url:"enregistrerNotes",
+			data:{
+				idEleve : idEleve,
+				idDevoir : idDevoir,
+				note : note
+				},
+			dataType :'json',
+			method:'POST',
+			success : function(repNote) 
+				{
+				notes = JSON.parse(repNote);
+				console.table(notes);
+				}
+
+			
+		});
+		}else{
+		 $("#message"+idEleve).html("<font color='red'>La valeur doit être comprise entre -1 et 20</font>");
+		}
+}
+
+</script>
+{% endblock %}
+
+
+
+
+
+
+

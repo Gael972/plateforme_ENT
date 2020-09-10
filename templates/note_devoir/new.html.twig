@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devoir{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <h1>Créer un nouveau devoir</h1>
+
+    {{ include('note_devoir/_form.html.twig') }}
+
+    <a href="{{ path('note_devoir_index') }}">Retour à la liste</a>
+{% endblock %}

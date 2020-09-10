@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste de types{% endblock %}
+
+{% block body %}
+    <h1>Liste des types de devoir</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_type_devoir in note_type_devoirs %}
+            <tr>
+                <td>{{ note_type_devoir.id }}</td>
+                <td>{{ note_type_devoir.nom }}</td>
+                <td>
+                    <a href="{{ path('note_type_devoir_show', {'id': note_type_devoir.id}) }}">Afficher</a>
+                    <a href="{{ path('note_type_devoir_edit', {'id': note_type_devoir.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun type de devoirs enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('note_type_devoir_new') }}">Créer un nouveau type</a>
+{% endblock %}

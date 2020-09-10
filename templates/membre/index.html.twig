@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membre{% endblock %}
+
+{% block body %}
+    <h1>Liste des membres</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Cp</th>
+                <th>Ville</th>
+                <th>Tel</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actif</th>
+                <th>Password</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for membre in membres %}
+            <tr>
+                <td>{{ membre.id }}</td>
+                <td>{{ membre.nom }}</td>
+                <td>{{ membre.prenom }}</td>
+                <td>{{ membre.adresse }}</td>
+                <td>{{ membre.cp }}</td>
+                <td>{{ membre.ville }}</td>
+                <td>{{ membre.tel }}</td>
+                <td>{{ membre.email }}</td>
+                <td>{{ membre.role }}</td>
+                <td>{{ membre.actif }}</td>
+                <td>{{ membre.password }}</td>
+                <td>{{ membre.createdAt ? membre.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ membre.updatedAt ? membre.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('membre_show', {'id': membre.id}) }}">show</a>
+                    <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('membre_new') }}">Create new</a>
+{% endblock %}

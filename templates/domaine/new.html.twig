@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Domaine{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <h1>Créer un nouveau domaine</h1>
+
+    {{ include('domaine/_form.html.twig') }}
+
+    <a href="{{ path('domaine_index') }}">back to list</a>
+{% endblock %}

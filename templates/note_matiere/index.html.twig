@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matières{% endblock %}
+
+{% block body %}
+    <h1>Liste des matières</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matière</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_matiere in note_matieres %}
+            <tr>
+                <td>{{ note_matiere.id }}</td>
+                <td>{{ note_matiere.nomMatiere }}</td>
+                <td>
+                    <a href="{{ path('note_matiere_show', {'id': note_matiere.id}) }}">Afficher</a>
+                    <a href="{{ path('note_matiere_edit', {'id': note_matiere.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune matière enregistrée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('note_matiere_new') }}">Créer une matière</a>
+{% endblock %}

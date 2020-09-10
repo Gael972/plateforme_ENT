@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ClasseMembre{% endblock %}
+
+{% block body %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <h1>Create new ClasseMembre</h1>
+
+    {{ include('classe_membre/_form.html.twig') }}
+
+    <a href="{{ path('classe_membre_index') }}">back to list</a>
+{% endblock %}

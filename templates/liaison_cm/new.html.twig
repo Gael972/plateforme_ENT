@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LiaisonCm{% endblock %}
+
+{% block body %}
+    <h1>Create new LiaisonCm</h1>
+
+    {{ include('liaison_cm/_form.html.twig') }}
+
+    <a href="{{ path('liaison_cm_index') }}">back to list</a>
+{% endblock %}
